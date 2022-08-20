@@ -1,0 +1,12 @@
+getwd()
+    h_power <- read.table("household_power_consumption.txt",
+                          sep = ";", header = T, na.strings = "?")
+library(tidyverse)        
+    h_power <- as_tibble(h_power)    
+h_power <- mutate(h_power, Date = dmy(Date), Time = hms::as_hms(Time))
+h_power <- filter(h_power, Date == ymd(20070201) | Date == ymd(20070202))
+       with(h_power, hist(Global_active_power))     
+dev.off()      
+with(h_power, hist(Global_active_power, xlab = "Global Active Power (kilowatts)", col = "red", main = "Global Active Power"))
+dev.copy(png, "plot1.png")
+dev.off()
